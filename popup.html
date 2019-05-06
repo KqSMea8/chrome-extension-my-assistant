@@ -10,6 +10,41 @@
 <body>
     <div id="root">
         <div id="currentWeek"></div>
+        <div id="links" class="group">
+            <div class="title">常用链接</div>
+            <div class="content">
+                <ul>
+                    <li><a href="https://yuque.antfin-inc.com/yuanying.xh/usesuu" target="_blank">工作日报</a></li>
+                    <li><a href="https://work.alibaba-inc.com/work/sns/workreportModify?#!rep/modify/send" target="_blank">阿里内外写周报</a></li>
+                    <li><a href="https://babylon.alibaba-inc.com/alphago/frontendPubConfig.htm#/" target="_blank">店小蜜版本号管理</a></li>
+                    <li><a href="http://ems.alibaba-inc.com/sites/overview/dxm/daily/page/1" target="_blank">店小蜜EMS配置</a></li>
+                    <li><a href="https://duing.alibaba-inc.com/experience#/aone" target="_blank">掘蜜计划</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="repos" class="group">
+            <div class="title">代码仓库查询</div>
+            <div class="content">
+                <div class="token">gitlab token: <input id="token" placeholder="填入 gitlab token" /></div>
+                <ul id="repoList">
+                    <li><a>bshop/suggest</a></li>
+                    <li><a>bshop/auto</a></li>
+                    <li><a>bshop/support</a></li>
+                    <li><a>bshop/bshop</a></li>
+                    <li><a>bshop/dashboard</a></li>
+                </ul>
+                <div id="repoResult">
+                    <div class="branches">
+                        <div class="title">branches</div>
+                        <div class="list"></div>
+                    </div>
+                    <div class="tags">
+                        <div class="title">tags</div>
+                        <div class="list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

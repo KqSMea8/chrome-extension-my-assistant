@@ -4,6 +4,7 @@
     "version": "0.1.0",
     "description": "一个属于我自己的个人助理",
     "permissions": [
+        "storage"
     ],
     "icons": {
         "16": "images/icon16.png",

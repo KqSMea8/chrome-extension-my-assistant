@@ -15,8 +15,57 @@ const getWeekOfYear = (weekStart) => {
     const dayOfYear = (now - firstDay) / (24 * 60 * 60 * 1000) + 1;
     const week = Math.ceil((dayOfYear - firstWeekDay) / 7) + 1;
     currentWeek.innerHTML = `本周是${year}年第${week}周`;
-};+
+};
+
+const getReposInfo = (repoName, type) => {
+    repoName = repoName.replace('/', '%2F');
+    type = type || 'tags';
+    const token = document.querySelector('#token').value;
+    if (!token) {
+        alert('还未输入token')
+        return;
+    }
+    chrome.storage.sync.set({
+        token,
+    });
+    return fetch(`http://gitlab.alibaba-inc.com/api/v3/projects/${repoName}/repository/${type}?private_token=${token}`)
+        .then(function(response) {
+            return response.json();
+        });
+};
+
+const renderNameList = (res, container) => {
+    const nameList = res.map(item => `<li>${item.name}</li>`);
+    container.innerHTML = `<ul>${nameList.join('')}</ul>`;
+};
+
+const initQueryRepo = () => {
+    const tokenInput = document.querySelector('#token');
+    const repoList = document.querySelector('#repoList');
+    const branchsDiv = document.querySelector('#repoResult .branches .list');
+    const tagsDiv = document.querySelector('#repoResult .tags .list');
+    chrome.storage.sync.get('token', items => {
+        if (items.token) {
+            tokenInput.value = items.token;
+        }
+    });
+
+    repoList.addEventListener('click', e => {
+        if (e.target.tagName.toLowerCase() === 'a') {
+            const repoName = e.target.innerText;
+            getReposInfo(repoName, 'branches').then(res => {
+                if (res.message) res = [];
+                renderNameList(res, branchsDiv);
+            });
+            getReposInfo(repoName, 'tags').then(res => {
+                if (res.message) res = [];
+                renderNameList(res, tagsDiv);
+            });
+        }
+    });
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     getWeekOfYear(1);
+    initQueryRepo();
 });
