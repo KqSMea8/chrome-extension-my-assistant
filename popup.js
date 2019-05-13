@@ -41,27 +41,52 @@ const renderNameList = (res, container) => {
 
 const initQueryRepo = () => {
     const tokenInput = document.querySelector('#token');
-    const repoList = document.querySelector('#repoList');
-    const branchsDiv = document.querySelector('#repoResult .branches .list');
-    const tagsDiv = document.querySelector('#repoResult .tags .list');
+    const reposListDiv = document.querySelector('#reposList');
+    const branchsDiv = document.querySelector('#reposResult .branches .list');
+    const tagsDiv = document.querySelector('#reposResult .tags .list');
+    
     chrome.storage.sync.get('token', items => {
         if (items.token) {
             tokenInput.value = items.token;
         }
     });
 
-    repoList.addEventListener('click', e => {
-        if (e.target.tagName.toLowerCase() === 'a') {
-            const repoName = e.target.innerText;
-            getReposInfo(repoName, 'branches').then(res => {
-                if (res.message) res = [];
-                renderNameList(res, branchsDiv);
-            });
-            getReposInfo(repoName, 'tags').then(res => {
-                if (res.message) res = [];
-                renderNameList(res, tagsDiv);
-            });
-        }
+    chrome.storage.sync.get('reposList', items => {
+        let reposList = items.reposList || [];
+        renderReposList(reposList);
+
+        const reposInput = document.querySelector('#reposInput');
+        reposInput.addEventListener('keypress', e => {
+            const value = e.target.value;
+            if (e.keyCode === 13 && value.includes('/')) {
+                reposInput.value = '';
+                reposList.push({
+                    text: value,
+                });
+                if (reposList) {
+                    saveReposList(reposList);
+                }
+            }
+        });
+
+        reposListDiv.addEventListener('click', e => {
+            if (e.target.tagName.toLowerCase() === 'a') {
+                const repoName = e.target.innerText;
+                getReposInfo(repoName, 'branches').then(res => {
+                    if (res.message) res = [];
+                    renderNameList(res, branchsDiv);
+                });
+                getReposInfo(repoName, 'tags').then(res => {
+                    if (res.message) res = [];
+                    renderNameList(res, tagsDiv);
+                });
+            }
+            if (e.target.tagName.toLowerCase() === 'i') {
+                const index = e.target.getAttribute('data-index');
+                reposList.splice(index, 1);
+                saveReposList(reposList);
+            }
+        });
     });
 };
 
@@ -110,14 +135,29 @@ const saveLinksList = (linksList) => {
     });
 };
 
+const saveReposList = (reposList) => {
+    alert(JSON.stringify(reposList))
+    chrome.storage.sync.set({
+        reposList,
+    }, () => {
+        renderReposList(reposList);
+    });
+};
+
 const renderLinksList = (linksList) => {
     const linksListDiv = document.querySelector('#linksList');
     const list = linksList.map((item, index) => `<li><a href="${item.url}" target="_blank">${item.text}</a><i data-index="${index}">x</i></li>`);
     linksListDiv.innerHTML = list.join('');
 };
 
+const renderReposList = (reposList) => {
+    const reposListDiv = document.querySelector('#reposList');
+    const list = reposList.map((item, index) => `<li><a>${item.text}</a><i data-index="${index}">x</i></li>`);
+    reposListDiv.innerHTML = list.join('');
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     getWeekOfYear(1);
-    // initQueryRepo();
+    initQueryRepo();
     initLinks();
 });

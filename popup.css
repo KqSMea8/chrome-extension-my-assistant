@@ -43,12 +43,26 @@ li {
     padding: 2px 5px;
     width: 200px;
 }
-
-#repoResult {
-    display: flex;
+.group .content li {
+    position: relative;
+}
+.group .content li > i {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+.group .content li > i:hover {
+    color: red;
+    font-weight: bold;
 }
 
-#repoResult > div {
+#reposResult {
+    display: flex;
+    margin-top: 10px;
+}
+
+#reposResult > div {
     width: 50%;
 }
 
@@ -57,18 +71,4 @@ li {
 }
 #repoList a {
     cursor: pointer;
-}
-
-#linksList li {
-    position: relative;
-}
-#linksList li > i {
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-}
-#linksList li > i:hover {
-    color: red;
-    font-weight: bold;
 }

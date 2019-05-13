@@ -27,16 +27,17 @@
             <div class="title">代码仓库查询</div>
             <div class="content">
                 <div class="input">配置token: <input id="token" placeholder="gitlab token" /></div>
-                <ul id="repoList">
-                    <li><a>bshop/suggest</a></li>
-                    <li><a>bshop/auto</a></li>
-                    <li><a>bshop/support</a></li>
-                    <li><a>bshop/bshop</a></li>
-                    <li><a>bshop/dashboard</a></li>
-                    <li><a>activeService/activeService</a></li>
-                    <li><a>activeService/servicescape</a></li>
+                <div class="input">添加仓库: <input id="reposInput" placeholder="分组/仓库名" /></div>
+                <ul id="reposList">
+                    <!-- bshop/suggest
+                    bshop/auto
+                    bshop/support
+                    bshop/bshop
+                    bshop/dashboard
+                    activeService/activeService
+                    activeService/servicescape -->
                 </ul>
-                <div id="repoResult">
+                <div id="reposResult">
                     <div class="branches">
                         <div class="title">branches</div>
                         <div class="list"></div>
