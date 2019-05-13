@@ -13,25 +13,28 @@
         <div id="links" class="group">
             <div class="title">常用链接</div>
             <div class="content">
-                <ul>
-                    <li><a href="https://yuque.antfin-inc.com/yuanying.xh/usesuu" target="_blank">工作日报</a></li>
-                    <li><a href="https://work.alibaba-inc.com/work/sns/workreportModify?#!rep/modify/send" target="_blank">阿里内外写周报</a></li>
-                    <li><a href="https://babylon.alibaba-inc.com/alphago/frontendPubConfig.htm#/" target="_blank">店小蜜版本号管理</a></li>
-                    <li><a href="http://ems.alibaba-inc.com/sites/overview/dxm/daily/page/1" target="_blank">店小蜜EMS配置</a></li>
-                    <li><a href="https://duing.alibaba-inc.com/experience#/aone" target="_blank">掘蜜计划</a></li>
+                <div class="input">添加链接: <input id="linksInput" placeholder="链接名称|链接地址" /></div>
+                <ul id="linksList">
+                    <!-- 工作日报|https://yuque.antfin-inc.com/yuanying.xh/usesuu
+                    阿里内外写周报|https://work.alibaba-inc.com/work/sns/workreportModify?#!rep/modify/send
+                    店小蜜版本号管理|https://babylon.alibaba-inc.com/alphago/frontendPubConfig.htm#/
+                    店小蜜EMS配置|http://ems.alibaba-inc.com/sites/overview/dxm/daily/page/1
+                    掘蜜计划|https://duing.alibaba-inc.com/experience#/aone -->
                 </ul>
             </div>
         </div>
         <div id="repos" class="group">
             <div class="title">代码仓库查询</div>
             <div class="content">
-                <div class="token">gitlab token: <input id="token" placeholder="填入 gitlab token" /></div>
+                <div class="input">配置token: <input id="token" placeholder="gitlab token" /></div>
                 <ul id="repoList">
                     <li><a>bshop/suggest</a></li>
                     <li><a>bshop/auto</a></li>
                     <li><a>bshop/support</a></li>
                     <li><a>bshop/bshop</a></li>
                     <li><a>bshop/dashboard</a></li>
+                    <li><a>activeService/activeService</a></li>
+                    <li><a>activeService/servicescape</a></li>
                 </ul>
                 <div id="repoResult">
                     <div class="branches">

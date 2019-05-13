@@ -65,7 +65,59 @@ const initQueryRepo = () => {
     });
 };
 
+const initLinks = () => {
+    chrome.storage.sync.get('linksList', items => {
+        let linksList = items.linksList || [];
+        renderLinksList(linksList);
+
+        const linksInput = document.querySelector('#linksInput');
+
+        linksInput.addEventListener('keypress', e => {
+            const value = e.target.value;
+            if (e.keyCode === 13 && value.includes('|')) {
+                linksInput.value = '';
+
+                const values = value.split('|');
+                const text = values[0];
+                const url = values[1];
+
+                linksList.push({
+                    text,
+                    url,
+                });
+                if (linksList) {
+                    saveLinksList(linksList);
+                }
+            }
+        });
+
+        const linksListDiv = document.querySelector('#linksList');
+        linksListDiv.addEventListener('click', e => {
+            if (e.target.tagName.toLowerCase() === 'i') {
+                const index = e.target.getAttribute('data-index');
+                linksList.splice(index, 1);
+                saveLinksList(linksList);
+            }
+        });
+    });
+};
+
+const saveLinksList = (linksList) => {
+    chrome.storage.sync.set({
+        linksList,
+    }, () => {
+        renderLinksList(linksList);
+    });
+};
+
+const renderLinksList = (linksList) => {
+    const linksListDiv = document.querySelector('#linksList');
+    const list = linksList.map((item, index) => `<li><a href="${item.url}" target="_blank">${item.text}</a><i data-index="${index}">x</i></li>`);
+    linksListDiv.innerHTML = list.join('');
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     getWeekOfYear(1);
-    initQueryRepo();
+    // initQueryRepo();
+    initLinks();
 });
